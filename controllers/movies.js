@@ -6,7 +6,12 @@ const Movie = require('../models/Movie');
 // @route     GET /api/v1/movies
 // @access    Public
 exports.getMovies = asyncHandler(async (req, res, next) => {
-    res.status(200).json(res.advancedResults);
+    const movies = await Movie.find();
+
+    res.status(200).json({
+        success: true,
+        data: movies,
+    });
 });
 
 // @desc      Get single movie
@@ -32,7 +37,7 @@ exports.getMovie = asyncHandler(async (req, res, next) => {
 
 // @desc      Add movie
 // @route     POST /api/v1/bootcamps/:bootcampId/movies
-// @access    Private
+// @access    Public
 exports.addMovie = asyncHandler(async (req, res, next) => {
   const movie = await Movie.create(req.body);
 
