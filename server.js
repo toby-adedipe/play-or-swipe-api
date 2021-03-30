@@ -24,6 +24,7 @@ connectDB();
 const movies = require('./routes/movies');
 const auth = require('./routes/auth');
 const users = require('./routes/users');
+const test = require('./routes/test');
 
 const app = express();
 
@@ -70,6 +71,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/v1/movies', movies);
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/users', users);
+app.use('/api/v1/test', test);
 
 app.use(errorHandler);
 
