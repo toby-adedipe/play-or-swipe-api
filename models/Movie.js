@@ -6,13 +6,12 @@ const MovieSchema = new mongoose.Schema({
         required: [true, 'Please add the name of the movie']
     },
     rating: Number,
-    year: {
-        type: String,
-        required: [true, 'What year was this movie made?']
-    },
+    year: String,
     genre: String,
     synopsis: String,
     category: String,
+    img: String,
+    ratingFrequency: Number,
 })
 
 module.exports = mongoose.model('Movie', MovieSchema)
