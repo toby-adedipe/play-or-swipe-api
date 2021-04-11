@@ -12,6 +12,8 @@ const MovieSchema = new mongoose.Schema({
     category: String,
     img: String,
     ratingFrequency: Number,
+    cookies: Array,
+    location: String,
 })
 
 module.exports = mongoose.model('Movie', MovieSchema)
