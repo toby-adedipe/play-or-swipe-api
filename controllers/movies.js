@@ -53,23 +53,27 @@ exports.addMovie = asyncHandler(async (req, res, next) => {
 exports.updateMovie = asyncHandler(async (req, res, next) => {
   let movie = await Movie.findById(req.params.id);
 
+  let data = req.body;
+  let newArr = movie.cookies;
+
   if (!movie) {
     return next(
       new ErrorResponse(`No movie with the id of ${req.params.id}`, 404)
     );
-  }
-
-  // Make sure user is movie owner
-//   if (movie.user.toString() !== req.user.id && req.user.role !== 'admin') {
-//     return next(
-//       new ErrorResponse(
-//         `User ${req.user.id} is not authorized to update movie ${movie._id}`,
-//         401
-//       )
-//     );
-//   }
-
-  movie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
+  }else if(movie.cookies.includes(req.body.cookieToken)){
+    return next(
+      new ErrorResponse(`You've already rated ${movie.title}`, 404)
+    );
+  };
+  
+  newArr.push(req.body.cookieToken);
+  data = {
+    ...data,
+    cookies: newArr,
+  };
+  
+  console.log(data);
+  movie = await Movie.findByIdAndUpdate(req.params.id, data, {
     new: true,
     runValidators: true
   });
