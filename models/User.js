@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const randomize = require('randomatic');
 
 const UserSchema = new mongoose.Schema({
-  name: {
+  fullName: {
     type: String,
     required: [true, 'Please add a name'],
   },
@@ -18,16 +18,16 @@ const UserSchema = new mongoose.Schema({
       'Please add a valid email',
     ],
   },
-  role: {
-    type: String,
-    enum: ['user', 'admin'],
-    default: 'user',
-  },
   password: {
     type: String,
     required: [true, 'Please add a password'],
     minlength: 6,
     select: false,
+  },
+  organisationId: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Account',
+    // required: true,
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
@@ -36,10 +36,9 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  twoFactorCode: String,
-  twoFactorCodeExpire: Date,
-  twoFactorEnable: {
+  approved: {
     type: Boolean,
+    required: true,
     default: false,
   },
   createdAt: {

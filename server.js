@@ -71,7 +71,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/v1/movies', movies);
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/users', users);
-app.use('/api/v1/test', test);
 
 app.use(errorHandler);
 

@@ -6,14 +6,20 @@ const MovieSchema = new mongoose.Schema({
         required: [true, 'Please add the name of the movie']
     },
     rating: Number,
-    year: String,
+    year: {
+        type: String,
+        required: [true, 'Please add the year the movie was released']
+    },
     genre: String,
     synopsis: String,
     category: String,
     img: String,
     ratingFrequency: Number,
     cookies: Array,
-    location: String,
+    location: {
+        type: String,
+        required: [true, 'Please add a location of the movie']
+    },
 })
 
 module.exports = mongoose.model('Movie', MovieSchema)

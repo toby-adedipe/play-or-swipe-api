@@ -115,3 +115,21 @@ exports.deleteMovie = asyncHandler(async (req, res, next) => {
     data: {}
   });
 });
+
+exports.filterMovie = asyncHandler(async (req, res, next) => {
+  const movies = await Movie.find();
+
+  const location = req.params.location;
+  const year = req.params.year;
+
+  const data = movies.filter((item)=>{
+    return item.location === location && item.year === year
+  })
+
+  res.status(200).json({
+      success: true,
+      count: data.length,
+      data: data,
+  });
+});
+

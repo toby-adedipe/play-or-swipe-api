@@ -4,7 +4,8 @@ const {
   getMovie,
   addMovie,
   updateMovie,
-  deleteMovie
+  deleteMovie,
+  filterMovie,
 } = require('../controllers/movies');
 
 const router = express.Router();
@@ -21,5 +22,9 @@ router
   .get(getMovie)
   .put(updateMovie)
   .delete(deleteMovie);
+
+router
+  .route('/:location/:year')
+  .get(filterMovie)
 
 module.exports = router;
