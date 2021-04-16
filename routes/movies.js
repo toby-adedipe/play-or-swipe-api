@@ -8,9 +8,14 @@ const {
   filterMovie,
 } = require('../controllers/movies');
 
+const reviewRouter = require('./reviews');
+
 const router = express.Router();
 
+const advancedResults = require('../middleware/advancedResults');
 //const router = express.Router({ mergeParams: true });
+
+router.use('/:movieId/reviews', reviewRouter);
 
 router
   .route('/')
