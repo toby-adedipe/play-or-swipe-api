@@ -21,7 +21,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
 
   // Make sure token exists
   if (!token) {
-    return next(new ErrorResponse('Not authorized to access this route', 401));
+    return next(new ErrorResponse('You cannot access this route without Creating an account or logging in', 401));
   }
 
   try {
@@ -32,7 +32,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
 
     next();
   } catch (err) {
-    return next(new ErrorResponse('Not authorized to access this route', 401));
+    return next(new ErrorResponse('You cannot access this route without Creating an account or logging in', 401));
   }
 });
 

@@ -19,7 +19,7 @@ exports.getMovies = asyncHandler(async (req, res, next) => {
 // @access    Public
 exports.getMovie = asyncHandler(async (req, res, next) => {
   const movie = await Movie.findById(req.params.id).populate({
-    path: 'bootcamp',
+    path: 'movie',
     select: 'name description'
   });
 

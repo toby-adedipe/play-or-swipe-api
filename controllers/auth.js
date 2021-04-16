@@ -8,14 +8,12 @@ const User = require('../models/User');
 // @route     POST /api/v1/auth/register
 // @access    Public
 exports.register = asyncHandler(async (req, res, next) => {
-  const { fullName, email, password, role } = req.body;
-
+  const { fullName, email, password } = req.body;
   // Create user
   const user = await User.create({
     fullName,
     email,
     password,
-    role,
   });
 
   // grab token and send to email
@@ -259,6 +257,8 @@ const sendTokenResponse = (user, statusCode, res) => {
 
   res.status(statusCode).cookie('token', token, options).json({
     success: true,
+    user: user.fullName,
+    userId: user._id,
     token,
   });
 };
