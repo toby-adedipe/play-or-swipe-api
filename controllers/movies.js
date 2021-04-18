@@ -72,7 +72,6 @@ exports.updateMovie = asyncHandler(async (req, res, next) => {
     cookies: newArr,
   };
   
-  console.log(data);
   movie = await Movie.findByIdAndUpdate(req.params.id, data, {
     new: true,
     runValidators: true

@@ -41,6 +41,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
+  ratings: Object,
   createdAt: {
     type: Date,
     default: Date.now,

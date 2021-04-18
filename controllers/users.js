@@ -1,6 +1,7 @@
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const User = require('../models/User');
+const Movie = require('../models/Movie');
 
 // @desc      Get all users
 // @route     GET /api/v1/users
@@ -37,10 +38,31 @@ exports.createUser = asyncHandler(async (req, res, next) => {
 // @route     PUT /api/v1/users/:id
 // @access    Private/Admin
 exports.updateUser = asyncHandler(async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+  let user = await User.findById(req.params.id);
+  let movie = await Movie.findById(req.body.movieId);
+
+  let oldRatings = user.ratings;
+
+  let movieId = req.body.movieId;
+  let rating = req.body.rating;
+
+  if(Object.keys(oldRatings).includes(movieId)){
+    return next(
+      new ErrorResponse(`You've already rated ${movie.title}`, 404)
+    );
+  }
+
+  let data = {
+    ...oldRatings,
+    [movieId]: rating
+  }
+
+  user = await User.findByIdAndUpdate(req.params.id, data, {
     new: true,
     runValidators: true
   });
+
+  user.save();
 
   res.status(200).json({
     success: true,
