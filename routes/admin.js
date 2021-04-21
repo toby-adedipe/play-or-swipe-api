@@ -1,7 +1,9 @@
 const express = require('express');
 const {
   getPendingMovies,
-  updateMovie,
+  adminUpdateMovie,
+  addMovie,
+  deleteMovie,
 } = require('../controllers/movies');
 
 const router = express.Router();
@@ -14,10 +16,15 @@ const { protect, authorize } = require('../middleware/auth');
 
 router.use(protect);
 router.use(authorize('admin'));
+
 router
   .route('/movies')
   .get(getPendingMovies)
-  .put(updateMovie)
+  .post(addMovie)
 
+router
+  .route('/movies/:id')
+  .put(adminUpdateMovie)
+  .delete(deleteMovie);
 
 module.exports = router;

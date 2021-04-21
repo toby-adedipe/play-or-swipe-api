@@ -1,6 +1,6 @@
 # PlayOrSwipe API
 
-> Backend API for PlayOrSwipe application, which is a bootcamp directory website
+> Backend API for PlayOrSwipe application, movie rating website
 
 
 
@@ -35,8 +35,6 @@ node seeder -i
 ## Demo
 
 
-Extensive documentation with examples [here](https://documenter.getpostman.com/view/8923145/SVtVVTzd?version=latest)
-
 - Version: 1.0.0
 - License: MIT
-- Author: Brad Traversy
+- Author: Adedipe Oluwatobi
