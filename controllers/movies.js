@@ -6,12 +6,30 @@ const Movie = require('../models/Movie');
 // @route     GET /api/v1/movies
 // @access    Public
 exports.getMovies = asyncHandler(async (req, res, next) => {
-    const movies = await Movie.find();
-
+    let movies = await Movie.find();
+    
+    let filteredMovies = movies.filter((movie)=> movie.status === 'approved');
+    
     res.status(200).json({
         success: true,
-        data: movies,
+        data: filteredMovies,
     });
+});
+
+// @desc      Get movies
+// @route     GET /api/v1/movies/admin
+// @access    Public
+
+exports.getPendingMovies = asyncHandler(async (req, res, next) => {
+  let movies = await Movie.find();
+  
+  let filteredMovies = movies.filter((movie)=> movie.status === 'pending');
+  
+  res.status(200).json({
+      success: true,
+      count: filteredMovies.length,
+      data: filteredMovies,
+  });
 });
 
 // @desc      Get single movie
