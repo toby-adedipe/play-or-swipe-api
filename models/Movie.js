@@ -20,6 +20,11 @@ const MovieSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please add a location of the movie']
     },
+    status: {
+        type: String,
+        enum: ['pending', 'approved', 'disapproved'],
+        default: 'pending',
+    },
 })
 
 module.exports = mongoose.model('Movie', MovieSchema)
