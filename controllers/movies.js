@@ -95,6 +95,39 @@ exports.updateMovie = asyncHandler(async (req, res, next) => {
     runValidators: true
   });
 
+  console.log(data);
+  movie.save();
+
+  res.status(200).json({
+    success: true,
+    data: movie
+  });
+});
+
+
+exports.adminUpdateMovie = asyncHandler(async (req, res, next) => {
+  let movie = await Movie.findById(req.params.id);
+
+  let data = req.body;
+  let cookies = movie.cookies;
+  
+  if (!movie) {
+    return next(
+      new ErrorResponse(`No movie with the id of ${req.params.id}`, 404)
+    );
+  }
+  
+  data = {
+    ...data,
+    cookies,
+  };
+  
+  movie = await Movie.findByIdAndUpdate(req.params.id, data, {
+    new: true,
+    runValidators: true
+  });
+
+  console.log(data);
   movie.save();
 
   res.status(200).json({
