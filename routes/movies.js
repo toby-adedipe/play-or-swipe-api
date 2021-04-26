@@ -29,7 +29,6 @@ router
   .route('/:id')
   .get(getMovie)
   .put(updateMovie)
-  .delete(deleteMovie);
 
 router
   .route('/:location/:year')
