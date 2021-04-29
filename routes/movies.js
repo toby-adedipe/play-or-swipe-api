@@ -4,24 +4,23 @@ const {
   getMovie,
   addMovie,
   updateMovie,
-  deleteMovie,
   filterMovie,
-  getPendingMovies,
 } = require('../controllers/movies');
+const Movie = require('../models/Movie');
+
 
 const reviewRouter = require('./reviews');
 
 const router = express.Router();
 
 const advancedResults = require('../middleware/advancedResults');
-const { protect, authorize } = require('../middleware/auth');
 //const router = express.Router({ mergeParams: true });
 
 router.use('/:movieId/reviews', reviewRouter);
 
 router
   .route('/')
-  .get(getMovies)
+  .get(advancedResults(Movie), getMovies)
   .post(addMovie)
 
 
