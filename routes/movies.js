@@ -5,6 +5,7 @@ const {
   addMovie,
   updateMovie,
   filterMovie,
+  search,
 } = require('../controllers/movies');
 const Movie = require('../models/Movie');
 
@@ -23,6 +24,9 @@ router
   .get(advancedResults(Movie), getMovies)
   .post(addMovie)
 
+router
+  .route('/search')
+  .get(search);
 
 router
   .route('/:id')

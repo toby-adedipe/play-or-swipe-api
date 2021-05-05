@@ -26,5 +26,6 @@ const MovieSchema = new mongoose.Schema({
         default: 'pending',
     },
 })
+MovieSchema.index({ title: 'text', synopsis: 'text' });
 
 module.exports = mongoose.model('Movie', MovieSchema)

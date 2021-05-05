@@ -39,7 +39,7 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     query.setQuery({ status: param});
   }
 
-  //filter data
+  //filter data by location and year
   if(req.query.location && req.query.year){
     const locationParam = req.query.location.split(',').join(' ');
     const yearParam = req.query.year.split(',').join(' ');
@@ -52,6 +52,9 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     const yearParam = req.query.year.split(',').join(' ');
     query.where('year').equals([yearParam])
   }
+
+  //filter by name
+
   //total before pagination
   const totalResults = await query;
 

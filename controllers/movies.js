@@ -42,6 +42,51 @@ exports.addMovie = asyncHandler(async (req, res, next) => {
   });
 });
 
+exports.search = asyncHandler(async (req, res, next) => {
+  //pagination
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 10;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+  const param = req.query.search.split(',').join(' ').toLowerCase();
+
+  let movies = Movie.aggregate([
+    { 
+      $match: { 
+        $text: { $search: param },
+        status: 'approved'
+      } 
+    },
+  ]).skip(startIndex).limit(limit)
+
+  let results = await movies;
+
+  const pagination = {};
+
+  if (endIndex < results.length) {
+    pagination.next = {
+      page: page + 1,
+      limit
+    };
+  }
+
+  if (startIndex > 0) {
+    pagination.prev = {
+      page: page - 1,
+      limit
+    };
+  }
+
+  res.status(200).json({
+    success: true,
+    count: results.length,
+    pagination:{
+      ...pagination,
+      total: results.length,
+    },
+    data: results
+  });
+})
 // @desc      Update movie
 // @route     PUT /api/v1/movies/:id
 // @access    Private
