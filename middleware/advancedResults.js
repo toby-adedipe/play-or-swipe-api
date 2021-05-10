@@ -30,7 +30,7 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     const sortBy = req.query.sort.split(',').join(' ');
     query = query.sort({[sortBy]: -1});
   } else {
-    query = query.sort('_id');
+    query = query.sort('title');
   }
 
   //Filter by status
