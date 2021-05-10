@@ -25,6 +25,10 @@ const MovieSchema = new mongoose.Schema({
         enum: ['pending', 'approved', 'disapproved'],
         default: 'pending',
     },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 })
 MovieSchema.index({ title: 'text', synopsis: 'text' });
 
