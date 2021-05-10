@@ -44,20 +44,32 @@ exports.addMovie = asyncHandler(async (req, res, next) => {
 
 exports.search = asyncHandler(async (req, res, next) => {
   //pagination
+
   const page = parseInt(req.query.page, 10) || 1;
   const limit = parseInt(req.query.limit, 10) || 10;
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
   const param = req.query.search.split(',').join(' ').toLowerCase();
 
-  let movies = Movie.aggregate([
-    { 
-      $match: { 
-        $text: { $search: param },
-        status: 'approved'
-      } 
-    },
-  ]).skip(startIndex).limit(limit)
+  let movies;
+  if(req.query.status){
+    movies = Movie.aggregate([
+      { 
+        $match: { 
+          $text: { $search: param },
+          status: 'approved'
+        } 
+      },
+    ]).skip(startIndex).limit(limit)
+  }else{
+    movies = Movie.aggregate([
+      { 
+        $match: { 
+          $text: { $search: param },
+        } 
+      },
+    ]).skip(startIndex).limit(limit)
+  } 
 
   let results = await movies;
 
@@ -87,6 +99,8 @@ exports.search = asyncHandler(async (req, res, next) => {
     data: results
   });
 })
+
+
 // @desc      Update movie
 // @route     PUT /api/v1/movies/:id
 // @access    Private
